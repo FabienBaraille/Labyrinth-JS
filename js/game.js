@@ -1,7 +1,9 @@
 const game = {
+    idMap: 'n1',
+    selectedMaps: null,
     currentPos : {
-        'row': 7,
-        'column': 2
+        'row': null,
+        'column': null
     },
     nextPos: {
         'row': null,
@@ -9,7 +11,6 @@ const game = {
     },
     currentBoard: [],
     landElt: document.querySelector('.terrain_de_jeu'),
-    cellWidth: 50,
     types: {
         'x': 'classic',
         '*': 'wall',
@@ -19,11 +20,33 @@ const game = {
     newGameButton: document.querySelector('button'),
     winElt: document.querySelector('.win'),
     init: function(){
-        for (const rows of models.n1) {
+        game.currentBoard = [];
+        theme.init();
+        game.loadMap();
+        document.addEventListener('keydown', game.handleKeyBoard);
+        document.querySelector('#map').addEventListener('change', game.handleMapChange);
+    },
+    handleMapChange: function(event) {
+        game.idMap = event.currentTarget.value;
+        game.loadMap();
+    },
+    loadMap: function() {
+        game.selectedMaps = maps[game.idMap];
+        for (const key in game.selectedMaps) {
+            if (game.selectedMaps[key].includes('o')) {
+                game.currentPos.row = parseInt(key);
+            }
+        }
+        game.currentBoard = [];
+        for (const rows of game.selectedMaps) {
             game.currentBoard.push(rows.split(''));
         }
+        for (const key in game.currentBoard[game.currentPos.row]) {
+            if (game.currentBoard[game.currentPos.row][key] == 'o') {
+                game.currentPos.column = parseInt(key);
+            }
+        }
         game.drawBoard();
-        document.addEventListener('keydown', game.handleKeyBoard);
     },
     drawBoard: function() {
         game.landElt.textContent = '';
@@ -110,7 +133,6 @@ const game = {
     },
     handleNewGame: function() {
         document.querySelector('.terrain_de_jeu').innerHTML = '';
-        game.currentBoard = [];
         game.winElt.textContent = '';
         game.newGameButton.hidden = true;
         game.init();

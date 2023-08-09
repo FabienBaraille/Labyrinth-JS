@@ -1,0 +1,7 @@
+.burger:before {
+    content:"\01F354";
+    color: #c74a50;
+}
+.goal:before {
+    content: "\01F604";
+}
