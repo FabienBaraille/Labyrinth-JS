@@ -21,7 +21,7 @@ button {
     padding: 0 10px;
 }
 .terrain_de_jeu{
-    margin: 2em auto;
+    margin: 1em auto;
     display: flex;
     flex-direction: column;
 }
@@ -30,8 +30,8 @@ button {
     flex-direction: row;
 }
 .square {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     float: left;
     background: #bddfbd;
 }

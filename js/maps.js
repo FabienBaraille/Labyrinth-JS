@@ -22,5 +22,17 @@ const maps = {
         'xxxxxxxx*x**x',
         'x********xx-x',
         'xxxxxxxxx**xx',
+    ],
+    test : [
+        'xxxxxx*****xx',
+        'x*-*xxxxxx*xx',
+        'x*o*xx**xx*xx',
+        'xxx*xx*x*xxxx',
+        '****xx*x*xxx*',
+        'xxxxxx*x***x*',
+        'xx*****xxx*x*',
+        'xxxxxxxx*x**x',
+        'x********xxxx',
+        'xxxxxxxxx**xx',
     ]
 }
