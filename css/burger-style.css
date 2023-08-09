@@ -14,9 +14,9 @@
 }
 .goal:before {
     content:"\01F354";
-    color: #944ac7;
+    color: #000000;
 }
 .player:before {
     content: "\01F604";
-    color: rgb(20, 71, 37);
+    color: white;
 }

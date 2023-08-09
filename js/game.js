@@ -5,15 +5,18 @@ const game = {
         'row': null,
         'column': null
     },
+    rowLimit: null,
+    columnLimit: null,
     nextPos: {
         'row': null,
         'column': null
     },
+
     currentBoard: [],
     types: {
-        '*': 'wall',
-        'o': 'player',
-        '-': 'goal'
+        '#': 'wall',
+        'P': 'player',
+        'G': 'goal'
     },
 
     landElt: document.querySelector('.terrain_de_jeu'),
@@ -36,8 +39,9 @@ const game = {
     },
     loadMap: function() {
         game.selectedMap = maps[game.idMap];
+        game.rowLimit = game.selectedMap.length - 1;
         for (const key in game.selectedMap) {
-            if (game.selectedMap[key].includes('o')) {
+            if (game.selectedMap[key].includes('P')) {
                 game.currentPos.row = parseInt(key);
             }
         }
@@ -45,8 +49,9 @@ const game = {
         for (const rows of game.selectedMap) {
             game.currentBoard.push(rows.split(''));
         }
+        game.columnLimit = game.currentBoard[0].length - 1;
         for (const key in game.currentBoard[game.currentPos.row]) {
-            if (game.currentBoard[game.currentPos.row][key] == 'o') {
+            if (game.currentBoard[game.currentPos.row][key] == 'P') {
                 game.currentPos.column = parseInt(key);
             }
         }
@@ -60,10 +65,10 @@ const game = {
             for (const col of rows) {
                 const cell = document.createElement('div');
                 cell.classList.add('square');
-                if (col == '-o') {
-                    cell.classList.add(game.types['o']);
-                    cell.classList.add(game.types['-']);
-                } else if (col !== 'x'){
+                if (col == 'GP') {
+                    cell.classList.add(game.types['P']);
+                    cell.classList.add(game.types['G']);
+                } else if (col !== '-'){
                     cell.classList.add(game.types[col]);
                 }
                 row.append(cell);
@@ -75,19 +80,19 @@ const game = {
         let outMessage = '';
         switch (event.key) {
             case 'ArrowUp':
-                game.currentPos.row > 0 ? game.nextPos.row =  game.currentPos.row - 1 : outMessage = 'Vous sortez du plateau !' ;
+                game.currentPos.row > 0 ? game.nextPos.row =  game.currentPos.row - 1 : outMessage = 'Out of bound !' ;
                 game.nextPos.column = game.currentPos.column;
                 break;
             case 'ArrowDown':
-                game.currentPos.row < 9 ? game.nextPos.row = game.currentPos.row + 1 : outMessage = 'Vous sortez du plateau !' ;
+                game.currentPos.row < game.rowLimit ? game.nextPos.row = game.currentPos.row + 1 : outMessage = 'Out of bound !' ;
                 game.nextPos.column = game.currentPos.column;
                 break;
             case 'ArrowRight':
-                game.currentPos.column < 12 ? game.nextPos.column = game.currentPos.column + 1 : outMessage = 'Vous sortez du plateau !' ;
+                game.currentPos.column < game.columnLimit ? game.nextPos.column = game.currentPos.column + 1 : outMessage = 'Out of bound !' ;
                 game.nextPos.row = game.currentPos.row;
                 break;
             case 'ArrowLeft':
-                game.currentPos.column > 0 ? game.nextPos.column = game.currentPos.column - 1 : outMessage = 'Vous sortez du plateau !' ;
+                game.currentPos.column > 0 ? game.nextPos.column = game.currentPos.column - 1 : outMessage = 'Out of bound !' ;
                 game.nextPos.row = game.currentPos.row;
                 break;
             default:
@@ -99,14 +104,14 @@ const game = {
     moveBurger: function() {
         const answer = game.checkWalls();
         if (answer == 'move') {
-            game.currentBoard[game.currentPos.row][game.currentPos.column] = 'x';
-            game.currentBoard[game.nextPos.row][game.nextPos.column] = 'o';
+            game.currentBoard[game.currentPos.row][game.currentPos.column] = '-';
+            game.currentBoard[game.nextPos.row][game.nextPos.column] = 'P';
             game.currentPos.row = game.nextPos.row;
             game.currentPos.column = game.nextPos.column;
             game.drawBoard();
         } else if (answer == 'You win !') {
-            game.currentBoard[game.currentPos.row][game.currentPos.column] = 'x';
-            game.currentBoard[game.nextPos.row][game.nextPos.column] = '-o';
+            game.currentBoard[game.currentPos.row][game.currentPos.column] = '-';
+            game.currentBoard[game.nextPos.row][game.nextPos.column] = 'GP';
             game.drawBoard();
             game.ending();
         } else {
@@ -117,13 +122,13 @@ const game = {
         const nextCell = game.currentBoard[game.nextPos.row][game.nextPos.column];
         let message = '';
         switch (nextCell) {
-            case '*':
+            case '#':
                 message = 'There is a wall !'
                 break;
-            case 'x':
+            case '-':
                 message = 'move'
                 break;
-            case '-':
+            case 'G':
                 message = 'You win !'
                 break;
         }

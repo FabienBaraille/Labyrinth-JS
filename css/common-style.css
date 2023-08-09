@@ -35,10 +35,13 @@ button {
     height: 40px;
     float: left;
     background: #bddfbd;
+    background-image: url(../images/base/grass.png);
 }
 .square:nth-child(even){
     background: #afdaaf;
+    background-image: url(../images/base/grass-high.png);
 }
 .square.wall {
     background: #b9a288;
+    background-image: url(../images/base/rock.png);
 }
