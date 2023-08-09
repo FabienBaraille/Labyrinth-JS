@@ -1,6 +1,6 @@
 const game = {
     idMap: 'n1',
-    selectedMaps: null,
+    selectedMap: null,
     currentPos : {
         'row': null,
         'column': null
@@ -10,35 +10,39 @@ const game = {
         'column': null
     },
     currentBoard: [],
-    landElt: document.querySelector('.terrain_de_jeu'),
     types: {
-        'x': 'classic',
         '*': 'wall',
-        'o': 'burger',
+        'o': 'player',
         '-': 'goal'
     },
+
+    landElt: document.querySelector('.terrain_de_jeu'),
     newGameButton: document.querySelector('button'),
     winElt: document.querySelector('.win'),
+
+    themeSelectMenu: document.querySelector('#theme'),
+    mapSelectMenu: document.querySelector('#map'),
+
     init: function(){
         game.currentBoard = [];
-        theme.init();
         game.loadMap();
         document.addEventListener('keydown', game.handleKeyBoard);
-        document.querySelector('#map').addEventListener('change', game.handleMapChange);
+        game.mapSelectMenu.addEventListener('change', game.handleMapChange);
+        game.themeSelectMenu.addEventListener('change', theme.handleChange);
     },
     handleMapChange: function(event) {
         game.idMap = event.currentTarget.value;
         game.loadMap();
     },
     loadMap: function() {
-        game.selectedMaps = maps[game.idMap];
-        for (const key in game.selectedMaps) {
-            if (game.selectedMaps[key].includes('o')) {
+        game.selectedMap = maps[game.idMap];
+        for (const key in game.selectedMap) {
+            if (game.selectedMap[key].includes('o')) {
                 game.currentPos.row = parseInt(key);
             }
         }
         game.currentBoard = [];
-        for (const rows of game.selectedMaps) {
+        for (const rows of game.selectedMap) {
             game.currentBoard.push(rows.split(''));
         }
         for (const key in game.currentBoard[game.currentPos.row]) {
@@ -59,7 +63,7 @@ const game = {
                 if (col == '-o') {
                     cell.classList.add(game.types['o']);
                     cell.classList.add(game.types['-']);
-                } else {
+                } else if (col !== 'x'){
                     cell.classList.add(game.types[col]);
                 }
                 row.append(cell);
@@ -127,6 +131,8 @@ const game = {
     },
     ending: function() {
         document.removeEventListener('keydown', game.handleKeyBoard);
+        game.mapSelectMenu.disabled = true;
+        game.themeSelectMenu.disabled = true;
         game.newGameButton.addEventListener('click', game.handleNewGame);
         game.winElt.textContent = 'You win !';
         game.newGameButton.hidden = false;
@@ -135,6 +141,8 @@ const game = {
         document.querySelector('.terrain_de_jeu').innerHTML = '';
         game.winElt.textContent = '';
         game.newGameButton.hidden = true;
+        game.mapSelectMenu.disabled = false;
+        game.themeSelectMenu.disabled = false;
         game.init();
     }
 };

@@ -1,7 +1,4 @@
 const theme = {
-    init: function() {
-        document.querySelector('#theme').addEventListener('change', theme.handleChange);
-    },
     handleChange: function(event) {
         const themeSelected = event.currentTarget.value;
         const styleElt = document.querySelector('.opt-theme');

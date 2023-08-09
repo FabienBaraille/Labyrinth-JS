@@ -1,24 +1,22 @@
-.burger,
+.player,
 .goal {
     position: relative;
 }
-
-.burger:before,
+.player:before,
 .goal:before {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     top: 0;
-    line-height: 30px;
-    font-size: 28px;
-    color: rgb(20, 71, 37);
+    line-height: 40px;
+    font-size: 38px;
 }
-
-.burger:before {
+.goal:before {
     content:"\01F354";
     color: #944ac7;
 }
-.goal:before {
+.player:before {
     content: "\01F604";
+    color: rgb(20, 71, 37);
 }

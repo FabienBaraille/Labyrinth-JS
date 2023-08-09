@@ -1,7 +1,18 @@
-.burger:before {
-    content:"\01F354";
-    color: #c74a50;
+.player,
+.goal {
+    position: relative;
+}
+.player:before,
+.goal:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    line-height: 40px;
+    font-size: 38px;
 }
 .goal:before {
-    content: "\01F604";
+    content:url(../images/pika-theme/pika.png);
+}
+.player:before {
+    content:url(../images/pika-theme/pokeball.png);
 }
