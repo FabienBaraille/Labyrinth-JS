@@ -3,11 +3,17 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    font-family: 'Bree Serif', serif;
+    font-family: 'Cherry Bomb One', cursive;
 }
 .option, 
 .ending {
     display: flex;
     justify-content: center;
+}
+header, .win {
+    text-align: center;
+    color: rgb(104, 73, 26);
 }
 select, button {
     margin: 0 20px;

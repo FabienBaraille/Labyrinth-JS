@@ -79,18 +79,22 @@ const game = {
     handleKeyBoard: function(event) {
         let outMessage = '';
         switch (event.key) {
+            case 'z':
             case 'ArrowUp':
                 game.currentPos.row > 0 ? game.nextPos.row =  game.currentPos.row - 1 : outMessage = 'Out of bound !' ;
                 game.nextPos.column = game.currentPos.column;
                 break;
+            case 's':
             case 'ArrowDown':
                 game.currentPos.row < game.rowLimit ? game.nextPos.row = game.currentPos.row + 1 : outMessage = 'Out of bound !' ;
                 game.nextPos.column = game.currentPos.column;
                 break;
+            case 'd':
             case 'ArrowRight':
                 game.currentPos.column < game.columnLimit ? game.nextPos.column = game.currentPos.column + 1 : outMessage = 'Out of bound !' ;
                 game.nextPos.row = game.currentPos.row;
                 break;
+            case 'q':
             case 'ArrowLeft':
                 game.currentPos.column > 0 ? game.nextPos.column = game.currentPos.column - 1 : outMessage = 'Out of bound !' ;
                 game.nextPos.row = game.currentPos.row;
